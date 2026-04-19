@@ -1,116 +1,182 @@
-:root {
-    --gold: #d4af37;
-    --bg-dark: #050505;
-}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekomendasi C-Drama</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+    <style>
+        /* CSS INTERNAL - Agar tampilan mewah tanpa file terpisah */
+        body {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
 
-body {
-    background-color: var(--bg-dark);
-    color: white;
-    font-family: 'Noto Serif SC', serif;
-}
+        /* Judul Emas */
+        .popular-title {
+            text-align: left;
+            margin-left: 5%;
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fbf5b7 0%, #eec22f 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
 
-/* Header */
-header {
-    position: fixed;
-    width: 100%;
-    padding: 20px 5%;
-    display: flex;
-    justify-content: space-between;
-    z-index: 1000;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-}
+        /* Container Swiper */
+        .swiper {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 100px;
+        }
 
-nav ul { display: flex; list-style: none; }
-nav ul li a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px; /* Lebar poster */
+            height: 450px; /* Tinggi poster */
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(238, 194, 47, 0.3);
+        }
 
-/* Hero Section */
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.4), var(--bg-dark)), 
-                url('https://t4.ftcdn.net/jpg/07/65/28/69/360_F_765286958_HcpAse0f3BSEFXwonS6NMuyA7xpKKUxt.jpg'); /* Gambar Gerbang China Sinematik */
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
 
-.hero-content h1 {
-    font-size: 6rem;
-    font-family: 'Playfair Display', serif;
-    letter-spacing: 15px;
-    color: var(--gold);
-    margin-bottom: 10px;
-}
+        /* Overlay Detail (Muncul saat Hover) */
+        .detail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: 0.4s ease-in-out;
+            border-top: 3px solid #eec22f;
+        }
 
-.btn-explore {
-    margin-top: 30px;
-    padding: 12px 35px;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    text-decoration: none;
-    display: inline-block;
-    transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
+        .swiper-slide:hover .detail-overlay {
+            transform: translateY(0);
+        }
 
-.btn-explore:hover { background: var(--gold); color: black; }
+        .swiper-slide:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
 
-/* Grid Drama */
-.container { padding: 80px 5%; }
-.drama-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
-}
+        .detail-overlay h3 {
+            margin: 0 0 10px;
+            color: #fce38a;
+            font-size: 20px;
+        }
 
-.drama-card {
-    cursor: pointer;
-    transition: 0.4s;
-    border-radius: 5px;
-    overflow: hidden;
-    background: #111;
-}
+        .detail-overlay p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
 
-.drama-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+        .info-tag {
+            font-size: 12px;
+            color: #eec22f;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
 
-.card-img { height: 350px; background-size: cover; background-position: center; }
-.card-info { padding: 15px; border-top: 2px solid var(--gold); }
+        /* Warna Titik Navigasi */
+        .swiper-pagination-bullet {
+            background: #eec22f !important;
+        }
+    </style>
+</head>
+<body>
 
-/* Modal Trailer */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.95);
-}
+    <h2 class="popular-title">Drama Populer</h2>
 
-.modal-content {
-    margin: 5% auto;
-    padding: 20px;
-    width: 80%;
-    max-width: 800px;
-}
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500" alt="Love Beyond the Grave">
+                <div class="detail-overlay">
+                    <h3>Love Beyond the Grave</h3>
+                    <p>Kisah cinta terlarang antara dua dunia yang melampaui batas kematian dan takdir.</p>
+                    <div class="info-tag"><span>40 Episode</span> <span>⭐ 9.8</span></div>
+                </div>
+            </div>
 
-.video-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-}
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500" alt="Generation to Generation">
+                <div class="detail-overlay">
+                    <h3>Generation to Generation</h3>
+                    <p>Perjuangan klan keluarga dalam mempertahankan kehormatan di tengah pengkhianatan politik.</p>
+                    <div class="info-tag"><span>36 Episode</span> <span>⭐ 9.5</span></div>
+                </div>
+            </div>
 
-.video-container iframe {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-}
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500" alt="Pursuit of Jade">
+                <div class="detail-overlay">
+                    <h3>Pursuit of Jade</h3>
+                    <p>Pencarian mustika giok legendaris yang menyimpan rahasia kekuatan bela diri.</p>
+                    <div class="info-tag"><span>45 Episode</span> <span>⭐ 9.7</span></div>
+                </div>
+            </div>
 
-.close-modal {
-    color: var(--gold);
-    float: right;
-    font-size: 40px;
-    cursor: pointer;
-}
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=500" alt="Veil of Shadows">
+                <div class="detail-overlay">
+                    <h3>Veil of Shadows</h3>
+                    <p>Seorang detektif masa lalu mengungkap konspirasi besar di balik kabut misterius kekaisaran.</p>
+                    <div class="info-tag"><span>30 Episode</span> <span>⭐ 9.6</span></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            coverflowEffect: {
+                rotate: 35,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+</html>
