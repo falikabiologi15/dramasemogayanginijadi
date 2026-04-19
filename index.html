@@ -3,51 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineMandarin | Jelajah C-Drama</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Rekomendasi C-Drama</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* CSS INTERNAL - Agar tampilan mewah tanpa file terpisah */
+        body {
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Judul Emas */
+        .popular-title {
+            text-align: left;
+            margin-left: 5%;
+            font-size: 32px;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #fbf5b7 0%, #eec22f 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        /* Container Swiper */
+        .swiper {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 100px;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px; /* Lebar poster */
+            height: 450px; /* Tinggi poster */
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(238, 194, 47, 0.3);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        /* Overlay Detail (Muncul saat Hover) */
+        .detail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: 0.4s ease-in-out;
+            border-top: 3px solid #eec22f;
+        }
+
+        .swiper-slide:hover .detail-overlay {
+            transform: translateY(0);
+        }
+
+        .swiper-slide:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .detail-overlay h3 {
+            margin: 0 0 10px;
+            color: #fce38a;
+            font-size: 20px;
+        }
+
+        .detail-overlay p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .info-tag {
+            font-size: 12px;
+            color: #eec22f;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Warna Titik Navigasi */
+        .swiper-pagination-bullet {
+            background: #eec22f !important;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo" id="mainLogo"></div>
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#rekomendasi">Rekomendasi</a></li>
-            </ul>
-        </nav>
-    </header>
+    <h2 class="popular-title">Drama Populer</h2>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="fade-in">JELAJAH</h1>
-            <p class="fade-in-delayed">Temukan keajaiban dalam setiap bingkai cerita Mandarin.</p>
-            <a href="#rekomendasi" class="btn-explore">Mulai Jelajah</a>
-        </div>
-    </section>
-
-    <main id="rekomendasi">
-        <div class="container">
-            <div class="section-title">
-                <h2>Rekomendasi Pilihan</h2>
-                <div class="line"></div>
-            </div>
-            <div class="drama-grid" id="dramaGrid">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500" alt="Love Beyond the Grave">
+                <div class="detail-overlay">
+                    <h3>Love Beyond the Grave</h3>
+                    <p>Kisah cinta terlarang antara dua dunia yang melampaui batas kematian dan takdir.</p>
+                    <div class="info-tag"><span>40 Episode</span> <span>⭐ 9.8</span></div>
                 </div>
-        </div>
-    </main>
-
-    <div id="trailerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="video-container">
-                <iframe id="trailerVideo" src="" frameborder="0" allowfullscreen></iframe>
             </div>
-            <h3 id="modalTitle" style="margin-top: 15px; color: #d4af37;"></h3>
+
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500" alt="Generation to Generation">
+                <div class="detail-overlay">
+                    <h3>Generation to Generation</h3>
+                    <p>Perjuangan klan keluarga dalam mempertahankan kehormatan di tengah pengkhianatan politik.</p>
+                    <div class="info-tag"><span>36 Episode</span> <span>⭐ 9.5</span></div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=500" alt="Pursuit of Jade">
+                <div class="detail-overlay">
+                    <h3>Pursuit of Jade</h3>
+                    <p>Pencarian mustika giok legendaris yang menyimpan rahasia kekuatan bela diri.</p>
+                    <div class="info-tag"><span>45 Episode</span> <span>⭐ 9.7</span></div>
+                </div>
+            </div>
+
+            <div class="swiper-slide">
+                <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=500" alt="Veil of Shadows">
+                <div class="detail-overlay">
+                    <h3>Veil of Shadows</h3>
+                    <p>Seorang detektif masa lalu mengungkap konspirasi besar di balik kabut misterius kekaisaran.</p>
+                    <div class="info-tag"><span>30 Episode</span> <span>⭐ 9.6</span></div>
+                </div>
+            </div>
+
         </div>
+        <div class="swiper-pagination"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            coverflowEffect: {
+                rotate: 35,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
 </body>
 </html>
