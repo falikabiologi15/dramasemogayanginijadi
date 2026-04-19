@@ -1,167 +1,116 @@
 :root {
-    --bg-dark: #0a0a0a;
-    --card-dark: #161616;
     --gold: #d4af37;
-    --gold-hover: #f1c40f;
-    --crimson: #8e0000;
-    --text-white: #ffffff;
+    --bg-dark: #050505;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg-dark);
-    color: var(--text-white);
+    color: white;
     font-family: 'Noto Serif SC', serif;
-    line-height: 1.6;
 }
 
-/* Header & Logo */
+/* Header */
 header {
+    position: fixed;
+    width: 100%;
+    padding: 20px 5%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 5%;
-    position: absolute;
-    width: 100%;
-    z-index: 100;
+    z-index: 1000;
     background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
 }
 
-.logo-container {
-    text-align: center;
-    cursor: pointer;
-}
-
-.cn-text {
-    font-size: 28px;
-    color: var(--gold);
-    display: block;
-    font-weight: bold;
-    letter-spacing: 4px;
-}
-
-.en-text {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #ccc;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li { margin-left: 25px; }
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-nav ul li a:hover, .active { color: var(--gold); }
+nav ul { display: flex; list-style: none; }
+nav ul li a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; }
 
 /* Hero Section */
 .hero {
-    height: 80vh;
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.4), var(--bg-dark)), 
+                url('https://t4.ftcdn.net/jpg/07/65/28/69/360_F_765286958_HcpAse0f3BSEFXwonS6NMuyA7xpKKUxt.jpg'); /* Gambar Gerbang China Sinematik */
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
-    background-position: center;
-    position: relative;
     text-align: center;
 }
 
-.hero::after {
-    content: '';
-    position: absolute;
-    width: 100%; height: 100%;
-    background: linear-gradient(to top, var(--bg-dark), rgba(0,0,0,0.2));
-}
-
-.hero-content {
-    position: relative;
-    z-index: 10;
-    max-width: 800px;
-}
-
-.hero-content h2 {
+.hero-content h1 {
+    font-size: 6rem;
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
-    margin-bottom: 10px;
+    letter-spacing: 15px;
     color: var(--gold);
+    margin-bottom: 10px;
 }
 
-.btn-gold {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 30px;
-    background: transparent;
+.btn-explore {
+    margin-top: 30px;
+    padding: 12px 35px;
     border: 1px solid var(--gold);
     color: var(--gold);
     text-decoration: none;
+    display: inline-block;
     transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.btn-gold:hover {
-    background: var(--gold);
-    color: black;
-}
+.btn-explore:hover { background: var(--gold); color: black; }
 
-/* Drama Grid */
-.container { padding: 50px 5%; }
-
-.section-header h2 { font-size: 2rem; }
-
-.gold-line {
-    width: 50px;
-    height: 3px;
-    background: var(--gold);
-    margin: 10px 0 40px;
-}
-
+/* Grid Drama */
+.container { padding: 80px 5%; }
 .drama-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
 }
 
 .drama-card {
-    background: var(--card-dark);
-    border-radius: 8px;
-    overflow: hidden;
+    cursor: pointer;
     transition: 0.4s;
-    border: 1px solid #222;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #111;
 }
 
-.drama-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--gold);
+.drama-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+
+.card-img { height: 350px; background-size: cover; background-position: center; }
+.card-info { padding: 15px; border-top: 2px solid var(--gold); }
+
+/* Modal Trailer */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.95);
 }
 
-.card-img {
-    height: 320px;
-    background-size: cover;
-    background-position: center;
+.modal-content {
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
 }
 
-.card-info { padding: 15px; }
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+}
 
-.card-info h3 { font-size: 1.1rem; color: var(--gold); margin-bottom: 5px; }
+.video-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+}
 
-.card-info p { font-size: 0.8rem; color: #aaa; height: 40px; overflow: hidden; }
-
-footer {
-    text-align: center;
-    padding: 50px;
-    background: #050505;
-    border-top: 1px solid #111;
+.close-modal {
+    color: var(--gold);
+    float: right;
+    font-size: 40px;
+    cursor: pointer;
 }
